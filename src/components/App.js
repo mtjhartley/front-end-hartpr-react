@@ -3,6 +3,7 @@ import logo from '../assets/logo.svg';
 import '../stylesheets/App.css';
 import PlayerList from './Players/PlayerList';
 import PlayerTable from './Players/PlayerTable';
+import PlayerReactTable from './Players/PlayerReactTable';
 
 
 class App extends Component {
@@ -25,7 +26,7 @@ class App extends Component {
               </div>
             </nav>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col s8 m8 l8">
               <PlayerList />
             </div>
@@ -35,6 +36,9 @@ class App extends Component {
           </div>
           <div className="row">
             <PlayerTable />
+          </div> */}
+          <div className="row">
+            <PlayerReactTable />
           </div>
         </div>
 
