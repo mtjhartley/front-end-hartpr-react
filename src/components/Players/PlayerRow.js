@@ -1,10 +1,10 @@
 import React from 'react'
 
-export const PlayerRow = ({i, character, tag, 
+export const PlayerRow = ({rank, character, tag, 
 							name, trueskill}) => (
 	<tr>
 		<td>
-			{i}
+			{rank}
 		</td>
 		<td>
 			{character}

@@ -57,7 +57,7 @@ class PlayerTable extends Component {
                 </thead>
                 <tbody>
                     {this.state.players.map((player, i) => (
-                        <PlayerRow key={i} {...player} />
+                        <PlayerRow key={i} {...player} rank={i+1} />
                         ))
                     }
                 </tbody>
