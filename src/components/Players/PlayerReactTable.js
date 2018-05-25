@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
+import axios from 'axios';
+import { Link } from 'react-router-dom'
+
 //import { makeData, Logo, Tips } from "./Utils";
 // Import React Table
 import ReactTable from "react-table";
@@ -12,30 +15,35 @@ class PlayerReactTable extends Component {
         this.state = {
             players: [
                 {
+                    id: 1,
                     character: "Sheik",
                     tag: "Dempsey",
                     name: "Michael Hartley",
                     trueskill: 1234
                 },
                 {
+                    id: 2,
                     character: "Falco",
                     tag: "Dz",
                     name: "Mitch Dzugan",
                     trueskill: 4209
                 },
                 {
+                    id: 3,
                     character: "Falcon",
                     tag: "MLK$",
                     name: "Gary Mai",
                     trueskill: 4324
                 },
                 {
+                    id: 4,
                     character: "Falco",
                     tag: "PwrUp!",
                     name: "Alex Wallin",
                     trueskill: 5555
                 },
                 {
+                    id: 5,
                     character: "Fox",
                     tag: "DavidCanFly",
                     name: "David Tze",
@@ -45,19 +53,48 @@ class PlayerReactTable extends Component {
         };
     }
 
+    componentDidMount() {
+        const url = `http://localhost:61775/api/players?State=WA&OrderBy=trueSkill desc&pageNumber=1&pageSize=50`
+
+        axios.get(url)
+            .then((response) => {
+                this.setState({
+                    players: response.data.value
+                })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
     render() {
         const {players} = this.state;
         return (
             <div>
+                <h1>WA Players!</h1>
                 <ReactTable
                     data={players}
+                    
                     columns={[
+
                         {
+                            Header: "Rank",
+                            columns: [
+                                {
+                                    Header: "Rank",
+                                    Cell: row => (
+                                        <div>{row.index + 1}</div>
+                                    )
+                                }
+                            ]
+                        },                        {
                             Header: "Identity",
                             columns: [
                                 {
                                     Header: "Tag",
-                                    accessor: "tag"
+                                    accessor: "tag",
+                                    Cell: row => (
+                                    <Link to={`/players/${row.original.id}`}>{row.value}</Link>)
                                 },
                                 {
                                     Header: "Name",

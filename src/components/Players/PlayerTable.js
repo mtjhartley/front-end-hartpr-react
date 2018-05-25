@@ -1,5 +1,6 @@
 import { PlayerRow } from './PlayerRow';
 import { PropTypes } from 'react';
+import axios from 'axios';
 // import { Link } from 'react-router';
 import React, {Component} from 'react';
 
@@ -42,6 +43,20 @@ class PlayerTable extends Component {
         }
     }
 
+    componentDidMount() {
+        const url = `http://localhost:61775/api/players?State=WA&OrderBy=trueSkill desc&pageNumber=1&pageSize=50`
+
+        axios.get(url)
+            .then((response) => {
+                this.setState({
+                    players: response.data.value
+                })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
     render() {
         return (
             <div>
@@ -49,7 +64,6 @@ class PlayerTable extends Component {
                 <thead>
                     <tr>
                         <th>Rank</th>
-                        <th>Character</th>
                         <th>Tag</th>
                         <th>Name</th>
                         <th>Trueskill</th>

@@ -1,16 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-export const PlayerRow = ({rank, character, tag, 
+export const PlayerRow = ({id, rank, tag, 
 							name, trueskill}) => (
 	<tr>
 		<td>
 			{rank}
 		</td>
 		<td>
-			{character}
-		</td>
-		<td>
-			{tag}
+			<Link to={`/players/${id}`}>{tag}</Link>
 		</td>
 		<td>
 			{name}

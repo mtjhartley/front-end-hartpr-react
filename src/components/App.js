@@ -4,16 +4,23 @@ import '../stylesheets/App.css';
 import PlayerList from './Players/PlayerList';
 import PlayerTable from './Players/PlayerTable';
 import PlayerReactTable from './Players/PlayerReactTable';
+import Main from './Players/Main';
+import Header from './Players/Header';
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
 
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
+      <div className="App container">
+        <Header />
+        <Main />
+        {/* <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
+        <Header />
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
@@ -26,7 +33,7 @@ class App extends Component {
               </div>
             </nav>
           </div>
-          {/* <div className="row">
+          <div className="row">
             <div className="col s8 m8 l8">
               <PlayerList />
             </div>
@@ -36,11 +43,11 @@ class App extends Component {
           </div>
           <div className="row">
             <PlayerTable />
-          </div> */}
+          </div>
           <div className="row">
             <PlayerReactTable />
           </div>
-        </div>
+        </div> */}
 
 
       </div>
