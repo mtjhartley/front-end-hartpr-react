@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import Sandbag from '../../assets/sandbag.png';
 import axios from 'axios';
+import PlayerTournamentsTable from './PlayerTournamentsTable';
+import PlayerSetsTable from './PlayerSetsTable';
+import PlayerTournamentsReactTable from './PlayerTournamentsReactTable';
+import PlayerSetsReactTable from './PlayerSetsReactTable';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 class Player extends Component {
@@ -10,11 +14,18 @@ class Player extends Component {
         this.state = {
             player: {},
             sets: [],
-            tournaments: []
+            tournaments: [],
+            tournamentsAttended: 0,
+            setsPlayed: 0,
+            setsWon: 0,
+            setWinPercentage: 0,
+            gamesPlayed: 0,
+            gamesWon: 0,
         }
         this.getPlayerInfo = this.getPlayerInfo.bind(this);
         this.loadDummyPlayer = this.loadDummyPlayer.bind(this);
         this.loadDummyTournaments = this.loadDummyTournaments.bind(this);
+        // this.getPlayerStats = this.getPlayerStats.bind(this);
     }
 
     loadDummyPlayer() {
@@ -56,8 +67,8 @@ class Player extends Component {
             this.setState({
                 player: response.data
             })
-            console.log(playerUrl)
-            console.log(this.state.player)
+            // console.log(playerUrl)
+            // console.log(this.state.player)
         })
         .catch((error) => {
             console.log(error)
@@ -65,11 +76,31 @@ class Player extends Component {
 
         axios.get(setsUrl)
         .then((response) => {
+            var sets = response.data
+            var setsPlayed = sets.length
+            var setsWon = sets.filter(set => set.isWin == true).length
+            var setWinPercentage = ((setsWon / setsPlayed) * 100).toFixed(2);
+            var gamesPlayed = 0
+            var gamesWon = 0
+            for (var idx=0; idx < sets.length; idx++) {
+                var set = sets[idx];
+                gamesPlayed += set.winnerScore
+                gamesPlayed += set.loserScore
+                gamesWon += (set.isWin ? set.winnerScore : set.loserScore)
+            }
+            var gameWinPercentage = ((gamesWon / gamesPlayed) * 100).toFixed(2);
+            
             this.setState({
-                sets: response.data
+                sets: sets,
+                setsPlayed: setsPlayed,
+                setsWon: setsWon,
+                setWinPercentage: setWinPercentage,
+                gamesPlayed: gamesPlayed,
+                gamesWon: gamesWon,
+                gameWinPercentage: gameWinPercentage
             })
-            console.log(setsUrl)
-            console.log(this.state.sets)
+            // console.log(setsUrl)
+            // console.log(this.state.sets)
         })
         .catch((error) => {
             console.log(error)
@@ -78,19 +109,44 @@ class Player extends Component {
         axios.get(tournamentsUrl)
         .then((response) => {
             this.setState({
-                tournaments: response.data
+                tournaments: response.data,
+                tournamentsAttended: response.data.length
             })
-            console.log(tournamentsUrl)
-            console.log(this.state.tournaments)
+            // console.log(tournamentsUrl)
+            // console.log(this.state.tournaments)
         })
         .catch((error) => {
             console.log(error)
         })
+
+        this.setState({
+            loading:true
+        })
         
     }
 
+    // getPlayerStats() {
+    //     var tournamentsAttended = this.state.tournaments.length;
+    //     var setsPlayed = this.state.sets.length;
+    //     var setsWon = this.state.sets.filter(set => set.isWin == true).length;
+    //     var setWinPercentage = setsPlayed / setsWon 
+    //     var gamesPlayed = 0
+    //     var gamesWon = 0
+
+    //     console.log("this player attended this many tournaments", this.state.tournaments.length)
+
+    //     this.setState({
+    //         tournamentsAttended: tournamentsAttended,
+    //         setsPlayed: setsPlayed,
+    //         setsWon: setsWon,
+    //         setWinPercentage: setWinPercentage,
+    //         gamesPlayed: gamesPlayed,
+    //         gamesWon: gamesWon,
+    //     })
+    // }
+
     componentDidMount() {
-        this.getPlayerInfo(this.props.match.params.id)
+        this.getPlayerInfo(this.props.match.params.id);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -101,19 +157,30 @@ class Player extends Component {
     render() {
         return(
             <div>
-                <h1>This is the page for {this.state.player.name}</h1>
-                <div className='row'>
+                <div className="row">
                     <div className="col-md-4">
-                        <h3>Tournaments</h3>
-                        {this.state.tournaments.map((tournament) => (
-                            <p><Link to={`/tournaments/${tournament.id}`}>{tournament.name}</Link></p>
-                        ))}
+                        <h3>{this.state.player.name}</h3>
+                        <h4>Trueskill: {this.state.player.trueskill}</h4>
                     </div>
                     <div className="col-md-8">
-                        <h3>Sets</h3>
-                        {this.state.sets.map((set) => (
-                            <p><Link to={`/players/${set.winnerId}`}>{set.winner}</Link> vs. <Link to={`/players/${set.loserId}`}>{set.loser}</Link> {set.tournament}</p>
-                        ))}
+                        <h5>Tournaments attended : {this.state.tournamentsAttended}</h5>
+                        <h5>Sets Played : {this.state.setsPlayed}</h5>
+                        <h5>Sets Won : {this.state.setsWon}</h5>
+                        <h5>Sets Win Percentage : {this.state.setWinPercentage}</h5>
+                        <h5>Games Played : {this.state.gamesPlayed}</h5>
+                        <h5>Games Won : {this.state.gamesWon}</h5>
+                        <h5>Games Win Percentage : {this.state.gameWinPercentage}</h5>
+                        
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className="col-md-4">
+                        <PlayerTournamentsTable tournaments={this.state.tournaments} />
+                        <PlayerTournamentsReactTable tournaments={this.state.tournaments} />
+                    </div>
+                    <div className="col-md-8">
+                        <PlayerSetsTable sets={this.state.sets} />
+                        <PlayerSetsReactTable sets={this.state.sets} />
                     </div>
                 </div>
 
