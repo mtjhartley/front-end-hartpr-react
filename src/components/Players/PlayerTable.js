@@ -54,6 +54,40 @@ class PlayerTable extends Component {
             })
             .catch((error) => {
                 console.log(error)
+                this.setState({
+                    players: [
+                        {
+                            character: "Sheik",
+                            tag: "Dempsey",
+                            name: "Michael Hartley",
+                            trueskill: 1234
+                        },
+                        {
+                            character: "Falco",
+                            tag: "Dz",
+                            name: "Mitch Dzugan",
+                            trueskill: 4209
+                        },
+                        {
+                            character: "Falcon",
+                            tag: "MLK$",
+                            name: "Gary Mai",
+                            trueskill: 4324
+                        },
+                        {
+                            character: "Falco",
+                            tag: "PwrUp!",
+                            name: "Alex Wallin",
+                            trueskill: 5555
+                        },
+                        {
+                            character: "Fox",
+                            tag: "DavidCanFly",
+                            name: "David Tze",
+                            trueskill: 3130
+                        },
+                    ]
+                })
             })
     }
 
