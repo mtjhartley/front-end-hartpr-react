@@ -12,7 +12,38 @@ class Player extends Component {
             sets: [],
             tournaments: []
         }
-        this.getPlayerInfo = this.getPlayerInfo.bind(this)
+        this.getPlayerInfo = this.getPlayerInfo.bind(this);
+        this.loadDummyPlayer = this.loadDummyPlayer.bind(this);
+        this.loadDummyTournaments = this.loadDummyTournaments.bind(this);
+    }
+
+    loadDummyPlayer() {
+        return {
+            tag: "Dempsey",
+            id: 1,
+            name: "Michael Hartley",
+            character: "Sheik",
+            trueskill: 1234
+        }
+    }
+
+    loadDummyTournaments() {
+        return [
+            {
+                id: "1",
+                name: "Tony Town 2",
+                url: "tony-town-2",
+                date: "2007-04-20",
+                entrants: 64
+            },
+            {
+                id: "2",
+                name: "Dawg Pound",
+                url: "the-dawg-pound",
+                date: "2008-02-10",
+                entrants: 32
+            },
+        ]
     }
 
     getPlayerInfo(playerId) {

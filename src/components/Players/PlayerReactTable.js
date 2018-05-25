@@ -13,44 +13,50 @@ class PlayerReactTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            players: [
-                {
-                    id: 1,
-                    character: "Sheik",
-                    tag: "Dempsey",
-                    name: "Michael Hartley",
-                    trueskill: 1234
-                },
-                {
-                    id: 2,
-                    character: "Falco",
-                    tag: "Dz",
-                    name: "Mitch Dzugan",
-                    trueskill: 4209
-                },
-                {
-                    id: 3,
-                    character: "Falcon",
-                    tag: "MLK$",
-                    name: "Gary Mai",
-                    trueskill: 4324
-                },
-                {
-                    id: 4,
-                    character: "Falco",
-                    tag: "PwrUp!",
-                    name: "Alex Wallin",
-                    trueskill: 5555
-                },
-                {
-                    id: 5,
-                    character: "Fox",
-                    tag: "DavidCanFly",
-                    name: "David Tze",
-                    trueskill: 3130
-                },
-            ]
+            players: []
         };
+        this.loadDummyPlayers = this.loadDummyPlayers.bind(this);
+    }
+
+    loadDummyPlayers() {
+        return [
+            {
+                id: 1,
+                character: "Sheik",
+                tag: "Dempsey",
+                name: "Michael Hartley",
+                trueskill: 1234
+            },
+            {
+                id: 2,
+                character: "Falco",
+                tag: "Dz",
+                name: "Mitch Dzugan",
+                trueskill: 4209
+            },
+            {
+                id: 3,
+                character: "Falcon",
+                tag: "MLK$",
+                name: "Gary Mai",
+                trueskill: 4324
+            },
+            {
+                id: 4,
+                character: "Falco",
+                tag: "PwrUp!",
+                name: "Alex Wallin",
+                trueskill: 5555
+            },
+            {
+                id: 5,
+                character: "Fox",
+                tag: "DavidCanFly",
+                name: "David Tze",
+                trueskill: 3130
+            },
+        ]
+
     }
 
     componentDidMount() {
@@ -64,6 +70,9 @@ class PlayerReactTable extends Component {
             })
             .catch((error) => {
                 console.log(error)
+                this.setState({
+                    players: this.loadDummyPlayers()
+                })
             })
     }
 
