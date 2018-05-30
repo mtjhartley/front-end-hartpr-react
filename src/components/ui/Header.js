@@ -25,19 +25,11 @@ const Header = () => (
 
           <div className="collapse navbar-collapse" id="navbarsExample07">
             <ul className="navbar-nav mr-auto">
-<<<<<<< HEAD
             <li><Link to='/players/react/melee' className="nav-link">Players React Table</Link></li>
             <li><Link to='/players' className="nav-link">Players Table</Link></li>
             <li><Link to='/tournaments/react/melee' className="nav-link">Tournaments React Table</Link></li>
             <li><Link to='/tournaments' className="nav-link">Tournaments Table</Link></li>
             <li><Link to='/head2head/melee' className="nav-link">Head2Head</Link></li>
-=======
-            <li><Link to='/players/react' className="nav-link">Players React Table</Link></li>
-            <li><Link to='/players' className="nav-link">Players Table</Link></li>
-            <li><Link to='/tournaments/react' className="nav-link">Tournaments React Table</Link></li>
-            <li><Link to='/tournaments' className="nav-link">Tournaments Table</Link></li>
-            <li><Link to='/head2head' className="nav-link">Head2Head</Link></li>
->>>>>>> 6e38f7e9f665aebe99e79dcb7e7860dfb0670cc9
             <li><Link to='/about' className="nav-link">About</Link></li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
