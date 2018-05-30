@@ -1,15 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-
-const formatDate = (inputDate) => {
-    var splitDate = inputDate.split('T')[0]
-    var date = new Date(splitDate);
-    if (!isNaN(date.getTime())) {
-        // Months use 0 index.
-        return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
-    }
-}
+import {formatDate} from '../utils/utils';
 
 const PlayerSetsTable = (props) => (
     <div>

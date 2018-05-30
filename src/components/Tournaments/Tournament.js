@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import TournamentEntrantsReactTable from './TournamentEntrantsReactTable';
+import TournamentSetsReactTable from './TournamentSetsReactTable';
+import TournamentStats from './TournamentStats';
 
 // const Tournament = (props) => {
 //     console.log(props);
@@ -19,12 +22,13 @@ class Tournament extends Component {
         this.state = {
             tournament: {},
             sets: [],
-            players: [],
+            players: [], //TODO: Remove one of these, probably players!
+            entrants: [],
         }
     }
 
     componentDidMount() {
-        const url =`http://localhost:61775/api/tournaments/${this.props.match.params.id}`
+        const url =`http://localhost:61775/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}`
         
         axios.get(url)
             .then((response) => {
@@ -38,7 +42,7 @@ class Tournament extends Component {
                 console.log(error)
             })
 
-        const setsUrl =`http://localhost:61775/api/tournaments/${this.props.match.params.id}/sets`
+        const setsUrl =`http://localhost:61775/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}/sets`
         axios.get(setsUrl)
             .then((response) => {
                 this.setState({
@@ -51,7 +55,7 @@ class Tournament extends Component {
                 console.log(error)
             })
 
-        const playersUrl =`http://localhost:61775/api/tournaments/${this.props.match.params.id}/players`
+        const playersUrl =`http://localhost:61775/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}/players`
         axios.get(playersUrl)
             .then((response) => {
                 this.setState({
@@ -63,27 +67,33 @@ class Tournament extends Component {
             .catch((error) => {
                 console.log(error)
             })
+
+        const entrantsUrl =`http://localhost:61775/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}/entrants`
+        axios.get(entrantsUrl)
+            .then((response) => {
+                this.setState({
+                    entrants: response.data
+                })
+                console.log(entrantsUrl)
+                console.log(this.state.entrants)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     render() {
         return(
             <div>
-                <h1>This is the page for {this.state.tournament.name}</h1>
+                <TournamentStats tournament={this.state.tournament} entrants={this.state.entrants.length}/>
                 <div className='row'>
-                    <div className="col-md-4">
-                        <h3>Players</h3>
-                        {this.state.players.map((player) => (
-                            <p><Link to={`/players/${player.id}`}>{player.tag}</Link></p>
-                        ))}
+                    <div className="col-lg-6">
+                        <TournamentEntrantsReactTable game={this.props.match.params.game} entrants={this.state.entrants} />
                     </div>
-                    <div className="col-md-8">
-                        <h3>Sets</h3>
-                        {this.state.sets.map((set) => (
-                            <p><Link to={`/players/${set.winnerId}`}>{set.winner}</Link> - <Link to={`/players/${set.loserId}`}>{set.loser}</Link></p>
-                        ))}
+                    <div className="col-lg-6">
+                    <TournamentSetsReactTable game={this.props.match.params.game} sets={this.state.sets}/>
                     </div>
                 </div>
-                {/* <h1>This is a set for {this.state.sets[0].loser}</h1> */}
             </div>
         )
     }

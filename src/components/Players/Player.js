@@ -58,9 +58,9 @@ class Player extends Component {
     }
 
     getPlayerInfo(playerId) {
-        const playerUrl = `http://localhost:61775/api/players/${playerId}`
-        const setsUrl = `http://localhost:61775/api/players/${playerId}/sets`
-        const tournamentsUrl = `http://localhost:61775/api/players/${playerId}/tournaments`
+        const playerUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/${playerId}`
+        const setsUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/${playerId}/sets`
+        const tournamentsUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/${playerId}/tournaments`
 
         axios.get(playerUrl)
         .then((response) => {
@@ -176,7 +176,7 @@ class Player extends Component {
                 <div className='row'>
                     <div className="col-md-4">
                         <PlayerTournamentsTable tournaments={this.state.tournaments} />
-                        <PlayerTournamentsReactTable tournaments={this.state.tournaments} />
+                        <PlayerTournamentsReactTable game={this.props.match.params.game} tournaments={this.state.tournaments} />
                     </div>
                     <div className="col-md-8">
                         <PlayerSetsTable sets={this.state.sets} />

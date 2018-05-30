@@ -6,24 +6,27 @@ import ReactTable from "react-table";
 import "react-table/react-table.css";
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Head2HeadSetsTable from './Head2HeadSetsTable';
+import Head2HeadStats from './Head2HeadStats';
 
 class Head2Head extends Component {
     constructor(props) {
         super(props);
         this.state = {
             players: [],
-            player1: null,
-            player2: null,
-            sets: []
+            player1Id: null,
+            player2Id: null,
+            sets: [],
+            stats: {}
         }
         this.submit = this.submit.bind(this);
         this.handleChange1 = this.handleChange1.bind(this);
         this.handleChange2 = this.handleChange2.bind(this);
         this.getHead2HeadFromApi = this.getHead2HeadFromApi.bind(this);
+        this.calculateStatsForHead2Head = this.calculateStatsForHead2Head.bind(this);
     }
 
     componentDidMount() {
-        const url = `http://localhost:61775/api/players?OrderBy=tag&pageNumber=1&pageSize=1500`
+        const url = `http://localhost:61775/api/players/${this.props.match.params.game}/?OrderBy=tag&pageNumber=1&pageSize=1500`
         axios.get(url)
             .then((response) => {
                 this.setState({
@@ -35,15 +38,48 @@ class Head2Head extends Component {
             })
     }
 
+    calculateStatsForHead2Head(player1Id, player2Id, sets) {
+
+        var player1SetWins = 0;
+        var player2SetWins = 0;
+        var player1GameWins = 0;
+        var player2GameWins = 0;
+        var player1Tag;
+        var player2Tag;
+        for (var idx=0; idx<sets.length; idx++) {
+            if (player1Id === sets[idx]["winnerId"]) {
+                player1SetWins++;
+                player1GameWins += sets[idx]["winnerScore"]
+                player2GameWins += sets[idx]["loserScore"]
+            } else {
+                player2SetWins++;
+                player2GameWins += sets[idx]["winnerScore"]
+                player1GameWins += sets[idx]["loserScore"]
+            }
+        }
+        player1Tag = player1Id == sets[0]["winnerId"] ? sets[0]["winner"] : sets[0]["loser"] 
+        player2Tag = player2Id == sets[0]["winnerId"] ? sets[0]["winner"] : sets[0]["loser"] 
+
+        return {
+            player1SetWins: player1SetWins,
+            player2SetWins: player2SetWins,
+            player1GameWins: player1GameWins,
+            player2GameWins: player2GameWins,
+            player1Tag: player1Tag,
+            player2Tag: player2Tag
+        }
+    }
+
     getHead2HeadFromApi() {
-        var player1 = this.state.player1;
-        var player2 = this.state.player2;
-        const h2hUrl = `http://localhost:61775/api/players/head2head/${player1}/${player2}`
+        var player1Id = this.state.player1Id;
+        var player2Id = this.state.player2Id;
+        const h2hUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/head2head/${player1Id}/${player2Id}`
 
         axios.get(h2hUrl)
             .then((response) => {
                 this.setState({
-                    sets: response.data
+                    sets: response.data,
+                    stats: this.calculateStatsForHead2Head(player1Id, player2Id, response.data)
                 })
             })
             .catch((error) => {
@@ -63,7 +99,7 @@ class Head2Head extends Component {
         var playerId = e.target.value
         console.log(e.target.value)
         this.setState({
-            player1: playerId
+            player1Id: playerId
         })
     }
 
@@ -71,7 +107,7 @@ class Head2Head extends Component {
         var playerId = e.target.value
         console.log(e.target.value)
         this.setState({
-            player2: playerId
+            player2Id: playerId
         })
     }
 
@@ -86,7 +122,7 @@ class Head2Head extends Component {
                         <select
                             name="player1"
                             className="form-control form-control-lg"
-                            value={this.state.player1}
+                            value={this.state.player1Id}
                             onChange={this.handleChange1}
                             >
                             {this.state.players.map((player, i) => (
@@ -99,7 +135,7 @@ class Head2Head extends Component {
                         <label htmlFor="player2">Player 2</label>
                         <select
                             className="form-control form-control-lg"
-                            value={this.state.player2}
+                            value={this.state.player2Id}
                             onChange={this.handleChange2}
                             >
                             {this.state.players.map((player, i) => (
@@ -113,6 +149,7 @@ class Head2Head extends Component {
                 <button className="btn btn-primary mb-2 btn-lg btn-block">Let's Ride!</button>
             </form>
             <div>
+                <Head2HeadStats stats={this.state.stats}/>
                 <Head2HeadSetsTable sets={this.state.sets}/>
             </div>
         </div>

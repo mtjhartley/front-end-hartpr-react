@@ -11,13 +11,14 @@ const Main = () => (
     <main>
         <Switch>
             {/* <Route exact path='/' component={PlayerReactTable}/> */}
-            <Route path='/players/react' component={PlayerReactTable}/>
+            <Route path='/players/react/:game' component={PlayerReactTable}/>
             <Route path='/players' component={PlayerRouter}/>
-            <Route path='/tournaments/react' component={TournamentReactTable}/>
+            <Route path='/tournaments/react/:game' component={TournamentReactTable}/>
             <Route path='/tournaments' component={TournamentRouter}/>
-            <Route path='/head2head' component={Head2Head}/>
+            <Route path='/head2head/:game' component={Head2Head}/>
             <Route exact path='/about' component={About}/>
             <Redirect from="/" to="players" />
+            <Redirect from="/players/react" to="/players/react/melee" />
         </Switch>
     </main>
 )

@@ -44,8 +44,10 @@ class PlayerTable extends Component {
     }
 
     componentDidMount() {
-        const url = `http://localhost:61775/api/players?State=WA&OrderBy=trueSkill desc&pageNumber=1&pageSize=50`
-
+        const url = `http://localhost:61775/api/players/${this.props.match.params.game}?State=WA&OrderBy=trueSkill%20desc&pageNumber=1&pageSize=50`
+        console.log(this.props.match.params.game);
+        console.log("this.props.match.params.game");
+        //TODO: If params are invalid for game, redirect to 404 error component!
         axios.get(url)
             .then((response) => {
                 this.setState({
@@ -105,7 +107,7 @@ class PlayerTable extends Component {
                 </thead>
                 <tbody>
                     {this.state.players.map((player, i) => (
-                        <PlayerRow key={i} {...player} rank={i+1} />
+                        <PlayerRow key={i} {...player} game={this.props.match.params.game} rank={i+1} />
                         ))
                     }
                 </tbody>

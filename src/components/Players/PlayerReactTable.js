@@ -60,8 +60,9 @@ class PlayerReactTable extends Component {
     }
 
     componentDidMount() {
-        const url = `http://localhost:61775/api/players?State=WA&OrderBy=trueSkill desc&pageNumber=1&pageSize=50`
-
+        const url = `http://localhost:61775/api/players/${this.props.match.params.game}?State=WA&OrderBy=trueSkill%20desc&pageNumber=1&pageSize=50`
+        console.log(this.props.match.params.game);
+        console.log("this.props.match.params.game");
         axios.get(url)
             .then((response) => {
                 this.setState({
@@ -103,7 +104,7 @@ class PlayerReactTable extends Component {
                                     Header: "Tag",
                                     accessor: "tag",
                                     Cell: row => (
-                                    <Link to={`/players/${row.original.id}`}>{row.value}</Link>)
+                                    <Link to={`/players/${this.props.match.params.game}/${row.original.id}`}>{row.value}</Link>)
                                 },
                                 {
                                     Header: "Name",

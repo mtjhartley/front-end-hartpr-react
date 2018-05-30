@@ -2,13 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export const PlayerRow = ({id, rank, tag, 
-							name, trueskill}) => (
+							name, trueskill, game}) => (
 	<tr>
 		<td>
 			{rank}
 		</td>
 		<td>
-			<Link to={`/players/${id}`}>{tag}</Link>
+			<Link to={`/players/${game}/${id}`}>{tag}</Link>
 		</td>
 		<td>
 			{name}

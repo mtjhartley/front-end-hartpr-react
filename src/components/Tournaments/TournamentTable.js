@@ -48,7 +48,7 @@ class TournamentTable extends Component {
     }
 
     componentDidMount() {
-        const url = `http://localhost:61775/api/tournaments?orderBy=Date%20desc&pageNumber=1&pageSize=25`;
+        const url = `http://localhost:61775/api/tournaments/melee?orderBy=Date%20desc&pageNumber=1&pageSize=25`;
 
         axios.get(url)
             .then((response) => {
@@ -75,7 +75,7 @@ class TournamentTable extends Component {
                 </thead>
                 <tbody>
                     {this.state.tournaments.map((tournament, i) => (
-                        <TournamentRow key={i} {...tournament} />
+                        <TournamentRow key={i} game={this.props.match.params.game} {...tournament} />
                         ))
                     }
                 </tbody>

@@ -10,9 +10,11 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 class App extends Component {
   render() {
     return (
-      <div className="App container">
+      <div className="App">
         <Header />
-        <Main />
+        <div className="container">
+          <Main />
+        </div>
       </div>
     );
   }

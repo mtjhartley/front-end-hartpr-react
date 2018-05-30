@@ -26,7 +26,7 @@ class PlayerTournamentsReactTable extends Component {
                             Header: "Name",
                             accessor: "name",
                             Cell: row => (
-                                <Link to={`/tournaments/${row.original.id}`}>{row.value}</Link>)
+                                <Link to={`/tournaments/${this.props.game}/${row.original.id}`}>{row.value}</Link>)
                         }
                     ]}
                     defaultPageSize={10}

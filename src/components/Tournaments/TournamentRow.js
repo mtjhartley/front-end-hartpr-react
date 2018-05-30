@@ -1,17 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const TournamentRow = ({id, name, url, entrants, 
-							date}) => (
+export const TournamentRow = ({id, name, url, attendees, 
+							date, game}) => (
 	<tr>
 		<td>
-            <Link to={`/tournaments/${id}`}>{name}</Link>
+            <Link to={`/tournaments/${game}/${id}`}>{name}</Link>
 		</td>
 		<td>
 			<a href={url} target="_blank">SmashGG</a>
 		</td>
 		<td>
-			{entrants}
+			{attendees}
 		</td>
 		<td>
 			{date}

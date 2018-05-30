@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import {formatDate} from "../utils/utils";
 
 class PlayerSetsReactTable extends Component {
     constructor(props) {
@@ -11,17 +12,7 @@ class PlayerSetsReactTable extends Component {
         this.state = {
             sets : []
         };
-        this.formatDate = this.formatDate.bind(this);
         this.getTrProps = this.getTrProps.bind(this);
-    }
-
-    formatDate(inputDate) {
-        var splitDate = inputDate.split('T')[0]
-        var date = new Date(splitDate);
-        if (!isNaN(date.getTime())) {
-            // Months use 0 index.
-            return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
-        }
     }
 
     getTrProps = (state, rowInfo, instance) => {
@@ -73,7 +64,7 @@ class PlayerSetsReactTable extends Component {
                             Header: "Date",
                             accessor: "date",
                             Cell: row => (
-                                this.formatDate(row.value)
+                                formatDate(row.value)
                             ),
                         }
                     ]}
