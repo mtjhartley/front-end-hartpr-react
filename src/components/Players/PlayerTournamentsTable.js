@@ -14,7 +14,7 @@ const PlayerTournamentsTable = (props) => (
             <tbody>
                 {props.tournaments.map((tournament, i) => (
                     <tr key={i}>
-                        <td><Link to={`/tournaments/${tournament.id}`}>{tournament.name}</Link></td>
+                        <td><Link to={`/tournaments/${props.game}/${tournament.id}`}>{tournament.name}</Link></td>
                     </tr>
                     ))
                 }

@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
 import axios from 'axios';
-import { Link } from 'react-router-dom'
-import ReactTable from "react-table";
-import "react-table/react-table.css";
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Head2HeadSetsTable from './Head2HeadSetsTable';
 import Head2HeadStats from './Head2HeadStats';
@@ -39,7 +35,6 @@ class Head2Head extends Component {
     }
 
     calculateStatsForHead2Head(player1Id, player2Id, sets) {
-
         var player1SetWins = 0;
         var player2SetWins = 0;
         var player1GameWins = 0;
@@ -57,9 +52,10 @@ class Head2Head extends Component {
                 player1GameWins += sets[idx]["loserScore"]
             }
         }
-        player1Tag = player1Id == sets[0]["winnerId"] ? sets[0]["winner"] : sets[0]["loser"] 
-        player2Tag = player2Id == sets[0]["winnerId"] ? sets[0]["winner"] : sets[0]["loser"] 
-
+        if (sets.length > 0) {
+            player1Tag = player1Id === sets[0]["winnerId"] ? sets[0]["winner"] : sets[0]["loser"] 
+            player2Tag = player2Id === sets[0]["winnerId"] ? sets[0]["winner"] : sets[0]["loser"] 
+        }
         return {
             player1SetWins: player1SetWins,
             player2SetWins: player2SetWins,
@@ -71,6 +67,7 @@ class Head2Head extends Component {
     }
 
     getHead2HeadFromApi() {
+        //TODO: Where do I do something if the result is null aka they've never played, what component do I render and how?
         var player1Id = this.state.player1Id;
         var player2Id = this.state.player2Id;
         const h2hUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/head2head/${player1Id}/${player2Id}`

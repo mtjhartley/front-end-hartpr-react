@@ -30,6 +30,7 @@ const Header = () => (
             <li><Link to='/tournaments/react/melee' className="nav-link">Tournaments React Table</Link></li>
             <li><Link to='/tournaments' className="nav-link">Tournaments Table</Link></li>
             <li><Link to='/head2head/melee' className="nav-link">Head2Head</Link></li>
+            <li><Link to='/search' className="nav-link">Search</Link></li>
             <li><Link to='/about' className="nav-link">About</Link></li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>

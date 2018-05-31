@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
-import axios from 'axios';
 import { Link } from 'react-router-dom'
-import ReactTable from "react-table";
-import "react-table/react-table.css";
-import {formatDate} from "../utils/utils";
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import {formatDate} from '../utils/utils';
+import {setSizeOptions} from '../utils/utils'
 
 class PlayerSetsReactTable extends Component {
     constructor(props) {
@@ -41,7 +40,7 @@ class PlayerSetsReactTable extends Component {
                             Header: "Opponent",
                             accessor: "opponent",
                             Cell: row => (
-                                <Link to={`/players/${row.original.opponentId}`}>{row.value}</Link>
+                                <Link to={`/players/${this.props.game}/${row.original.opponentId}`}>{row.value}</Link>
                             ),
                         },
                         {
@@ -52,12 +51,13 @@ class PlayerSetsReactTable extends Component {
                                     <div>{row.original.winnerScore}-{row.original.loserScore}</div> :
                                     <div>{row.original.loserScore}-{row.original.winnerScore}</div>
                             ),
+                            minWidth: 30
                         },
                         {
                             Header: "Tournament",
                             accessor: "tournament",
                             Cell: row => (
-                                <Link to={`/tournaments/${row.original.tournamentId}`}>{row.value}</Link>
+                                <Link to={`/tournaments/${this.props.game}/${row.original.tournamentId}`}>{row.value}</Link>
                             ),
                         },
                         {
@@ -66,12 +66,14 @@ class PlayerSetsReactTable extends Component {
                             Cell: row => (
                                 formatDate(row.value)
                             ),
+                            minWidth:35
                         }
                     ]}
-                    defaultPageSize={10}
-                    pageSize={sets.length}
-                    showPageSizeOptions={false}
-                    showPaginationBottom={false}
+                    defaultPageSize={16}
+                    // pageSize={sets.length}
+                    showPageSizeOptions={true}
+                    pageSizeOptions={setSizeOptions(sets.length)}
+                    showPaginationBottom={true}
                     getTrProps={this.getTrProps}
                     className="-striped -highlight"
                 />

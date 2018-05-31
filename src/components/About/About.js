@@ -2,7 +2,7 @@ import React from 'react';
 
 const About = () => (
     <div className="about">
-         <h1>About</h1>
+         <h1 className= "text-left">About</h1>
          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis erat non dignissim malesuada.
              Mauris in elit quis lectus auctor pharetra. Cras fermentum leo est, a aliquet ligula cursus a. Ut vitae leo
              mollis, scelerisque enim nec, euismod turpis. Praesent ut turpis non justo lacinia varius sed eu mauris.

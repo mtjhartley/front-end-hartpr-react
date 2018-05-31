@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
 import { Link } from 'react-router-dom'
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import {entrantSizeOptions} from '../utils/utils';
 
 class TournamentEntrantsReactTable extends Component {
     constructor(props) {
@@ -14,7 +14,6 @@ class TournamentEntrantsReactTable extends Component {
 
     render() {
         const {entrants} = this.props;
-        const {defaultPageSize} = this.props.entrants.length;
         return (
             <div>
                 <h2>Entrants</h2>
@@ -38,9 +37,10 @@ class TournamentEntrantsReactTable extends Component {
                             minWidth: 35
                         }
                     ]}
-                    defaultPageSize={25}
+                    defaultPageSize={16}
                     // pageSize={entrants.length}
                     showPageSizeOptions={true}
+                    pageSizeOptions={entrantSizeOptions(this.props.entrants.length)}
                     showPaginationBottom={true}
                     className="-striped -highlight"
                     defaultSorted={[{

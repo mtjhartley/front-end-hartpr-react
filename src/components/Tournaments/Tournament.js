@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import TournamentEntrantsReactTable from './TournamentEntrantsReactTable';
 import TournamentSetsReactTable from './TournamentSetsReactTable';
 import TournamentStats from './TournamentStats';
-
+import Skeleton from 'react-loading-skeleton'
 // const Tournament = (props) => {
 //     console.log(props);
 //     console.log(props.match.params.id);

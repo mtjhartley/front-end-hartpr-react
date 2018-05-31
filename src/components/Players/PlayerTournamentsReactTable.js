@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
-import axios from 'axios';
 import { Link } from 'react-router-dom'
 import ReactTable from "react-table";
 import "react-table/react-table.css";
@@ -15,7 +13,6 @@ class PlayerTournamentsReactTable extends Component {
 
     render() {
         const {tournaments} = this.props;
-        const {defaultPageSize} = this.props.tournaments.length;
         return (
             <div>
                 <h4>Tournaments Attended</h4>

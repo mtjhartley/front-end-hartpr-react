@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
 import { Link } from 'react-router-dom'
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import {setSizeOptions} from '../utils/utils';
+
 
 class TournamentSetsReactTable extends Component {
     constructor(props) {
@@ -14,7 +15,6 @@ class TournamentSetsReactTable extends Component {
 
     render() {
         const {sets} = this.props;
-        const {defaultPageSize} = this.props.sets.length;
         return (
             <div>
                 <h2>Sets</h2>
@@ -43,9 +43,10 @@ class TournamentSetsReactTable extends Component {
                             minWidth: 35
                         }
                     ]}
-                    defaultPageSize={10}
+                    defaultPageSize={16}
                     // pageSize={sets.length}
                     showPageSizeOptions={true}
+                    pageSizeOptions={setSizeOptions(this.props.sets.length)}
                     showPaginationBottom={true}
                     className="-striped -highlight"
                     defaultSorted={[{

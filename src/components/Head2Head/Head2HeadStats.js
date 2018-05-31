@@ -19,6 +19,16 @@ const Head2HeadStats = (props) => (
             </div>
         </div>
 
+        <div className="row">
+            <div className ="col-md-6 text-left">{props.stats.player1Tag}</div>
+            <div className ="col-md-6 text-right">{props.stats.player2Tag}</div>
+        </div>
+
+        <div className="row">
+            <div className ="col-md-6 text-left">Games Won: {props.stats.player1GameWins}</div>
+            <div className ="col-md-6 text-right">Games Won: {props.stats.player2GameWins}</div>
+        </div>
+
     </div>
 )
 

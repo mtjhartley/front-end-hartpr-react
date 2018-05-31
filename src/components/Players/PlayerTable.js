@@ -1,5 +1,4 @@
 import { PlayerRow } from './PlayerRow';
-import { PropTypes } from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router';
 import React, {Component} from 'react';

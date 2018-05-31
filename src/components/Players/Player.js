@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
-import Sandbag from '../../assets/sandbag.png';
 import axios from 'axios';
-import PlayerTournamentsTable from './PlayerTournamentsTable';
-import PlayerSetsTable from './PlayerSetsTable';
 import PlayerTournamentsReactTable from './PlayerTournamentsReactTable';
 import PlayerSetsReactTable from './PlayerSetsReactTable';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import Whoops404 from '../ui/Whoops404';
+import { formatDate } from '../utils/utils'
 
 class Player extends Component {
     constructor(props) {
@@ -21,11 +19,20 @@ class Player extends Component {
             setWinPercentage: 0,
             gamesPlayed: 0,
             gamesWon: 0,
+            playerLoaded: false,
+            setsLoaded: false,
+            tournamentsLoaded: false,
+            initialLoading: true,
         }
         this.getPlayerInfo = this.getPlayerInfo.bind(this);
         this.loadDummyPlayer = this.loadDummyPlayer.bind(this);
         this.loadDummyTournaments = this.loadDummyTournaments.bind(this);
+        this.renderPlayerInfo = this.renderPlayerInfo.bind(this);
+        this.renderPlayerStats = this.renderPlayerStats.bind(this);
+        this.renderPlayerTournaments = this.renderPlayerTournaments.bind(this);
+        this.renderPlayerSets = this.renderPlayerSets.bind(this);
         // this.getPlayerStats = this.getPlayerStats.bind(this);
+        this.renderDummyInfo = this.renderDummyInfo.bind(this);
     }
 
     loadDummyPlayer() {
@@ -34,7 +41,9 @@ class Player extends Component {
             id: 1,
             name: "Michael Hartley",
             character: "Sheik",
-            trueskill: 1234
+            trueskill: 1234,
+            state: "WA",
+            lastActive: "1-1-1111"
         }
     }
 
@@ -65,7 +74,8 @@ class Player extends Component {
         axios.get(playerUrl)
         .then((response) => {
             this.setState({
-                player: response.data
+                player: response.data,
+                playerLoaded: true
             })
             // console.log(playerUrl)
             // console.log(this.state.player)
@@ -78,7 +88,7 @@ class Player extends Component {
         .then((response) => {
             var sets = response.data
             var setsPlayed = sets.length
-            var setsWon = sets.filter(set => set.isWin == true).length
+            var setsWon = sets.filter(set => set.isWin === true).length
             var setWinPercentage = ((setsWon / setsPlayed) * 100).toFixed(2);
             var gamesPlayed = 0
             var gamesWon = 0
@@ -97,7 +107,8 @@ class Player extends Component {
                 setWinPercentage: setWinPercentage,
                 gamesPlayed: gamesPlayed,
                 gamesWon: gamesWon,
-                gameWinPercentage: gameWinPercentage
+                gameWinPercentage: gameWinPercentage,
+                setsLoaded: true
             })
             // console.log(setsUrl)
             // console.log(this.state.sets)
@@ -110,40 +121,16 @@ class Player extends Component {
         .then((response) => {
             this.setState({
                 tournaments: response.data,
-                tournamentsAttended: response.data.length
+                tournamentsAttended: response.data.length,
+                tournamentsLoaded: true
             })
             // console.log(tournamentsUrl)
             // console.log(this.state.tournaments)
         })
         .catch((error) => {
             console.log(error)
-        })
-
-        this.setState({
-            loading:true
-        })
-        
+        })        
     }
-
-    // getPlayerStats() {
-    //     var tournamentsAttended = this.state.tournaments.length;
-    //     var setsPlayed = this.state.sets.length;
-    //     var setsWon = this.state.sets.filter(set => set.isWin == true).length;
-    //     var setWinPercentage = setsPlayed / setsWon 
-    //     var gamesPlayed = 0
-    //     var gamesWon = 0
-
-    //     console.log("this player attended this many tournaments", this.state.tournaments.length)
-
-    //     this.setState({
-    //         tournamentsAttended: tournamentsAttended,
-    //         setsPlayed: setsPlayed,
-    //         setsWon: setsWon,
-    //         setWinPercentage: setWinPercentage,
-    //         gamesPlayed: gamesPlayed,
-    //         gamesWon: gamesWon,
-    //     })
-    // }
 
     componentDidMount() {
         this.getPlayerInfo(this.props.match.params.id);
@@ -154,37 +141,89 @@ class Player extends Component {
         this.getPlayerInfo(id);
     }
 
+    renderPlayerStats() {
+        return (
+            <div className="col-md-8">
+                <h5>Tournaments attended : {this.state.tournamentsAttended}</h5>
+                <h5>Sets Played : {this.state.setsPlayed}</h5>
+                <h5>Sets Won : {this.state.setsWon}</h5>
+                <h5>Sets Win Percentage : {this.state.setWinPercentage}</h5>
+                <h5>Games Played : {this.state.gamesPlayed}</h5>
+                <h5>Games Won : {this.state.gamesWon}</h5>
+                <h5>Games Win Percentage : {this.state.gameWinPercentage}</h5>
+            </div>
+        )
+    }
+
+    renderPlayerInfo() {
+        return (
+            <div className="col-md-4">
+                <h1 className="text-left">{this.state.player.tag}</h1>
+                <h4 className="text-left">{this.state.player.name}</h4>
+                <h5 className="text-left">Region: {this.state.player.state}</h5>
+                <h2 className="text-left">Trueskill: {this.state.player.trueskill}</h2>
+                <h6 className="text-left">Last Active: {formatDate(this.state.player.lastActive)}</h6>
+            </div>
+        )
+    }   
+
+    renderDummyInfo() {
+        return (
+            <div className="col-md-4">
+                <h1 className="text-left">Tag</h1>
+                <h4 className="text-left">Name</h4>
+                <h5 className="text-left">Region</h5>
+                <h2 className="text-left">Trueskill</h2>
+                <h6 className="text-left">Last Active</h6>
+            </div>
+        ) 
+    }
+
+    renderPlayerTournaments() {
+        return (
+            <div className="col-lg-4">
+                {/* <PlayerTournamentsTable game={this.props.match.params.game} tournaments={this.state.tournaments} /> */}
+                <PlayerTournamentsReactTable game={this.props.match.params.game} tournaments={this.state.tournaments} />
+            </div>
+        )
+    }
+
+    renderPlayerSets() {
+        return (
+            <div className="col-lg-8">
+                {/* <PlayerSetsTable game={this.props.match.params.game} sets={this.state.sets} /> */}
+                <PlayerSetsReactTable game={this.props.match.params.game} sets={this.state.sets} />
+            </div>
+        )
+    }
+
     render() {
         return(
             <div>
-                <div className="row">
-                    <div className="col-md-4">
-                        <h3>{this.state.player.name}</h3>
-                        <h4>Trueskill: {this.state.player.trueskill}</h4>
+            {(this.state.playerLoaded && this.state.setsLoaded && this.state.tournamentsLoaded || !this.state.initialLoading) ? 
+                <div>
+                    <div className="row">
+                        {this.renderPlayerInfo()}
+                        {this.renderPlayerStats()}
                     </div>
-                    <div className="col-md-8">
-                        <h5>Tournaments attended : {this.state.tournamentsAttended}</h5>
-                        <h5>Sets Played : {this.state.setsPlayed}</h5>
-                        <h5>Sets Won : {this.state.setsWon}</h5>
-                        <h5>Sets Win Percentage : {this.state.setWinPercentage}</h5>
-                        <h5>Games Played : {this.state.gamesPlayed}</h5>
-                        <h5>Games Won : {this.state.gamesWon}</h5>
-                        <h5>Games Win Percentage : {this.state.gameWinPercentage}</h5>
-                        
+                    <div className='row'>
+                        {this.renderPlayerTournaments()}
+                        {this.renderPlayerSets()}
                     </div>
+                </div> : 
+                <div>
+                    <Whoops404 entity={"player"} />
+                        <div className="row">
+                            {this.renderDummyInfo()}
+                            {this.renderPlayerStats()}
+                        </div>
+                        <div className='row'>
+                            {this.renderPlayerTournaments()}
+                            {this.renderPlayerSets()}
+                        </div>
                 </div>
-                <div className='row'>
-                    <div className="col-md-4">
-                        <PlayerTournamentsTable tournaments={this.state.tournaments} />
-                        <PlayerTournamentsReactTable game={this.props.match.params.game} tournaments={this.state.tournaments} />
-                    </div>
-                    <div className="col-md-8">
-                        <PlayerSetsTable sets={this.state.sets} />
-                        <PlayerSetsReactTable sets={this.state.sets} />
-                    </div>
-                </div>
-
-            </div>  
+            }
+            </div>
         )
     }
 }

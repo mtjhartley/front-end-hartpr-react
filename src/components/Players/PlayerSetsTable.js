@@ -18,14 +18,14 @@ const PlayerSetsTable = (props) => (
             <tbody>
                 {props.sets.map((set, i) => (
                     <tr key={i} style={{backgroundColor: set.isWin ? "#BFE9B1" : "#F8BCC5"}}>
-                        <td><Link to={`/players/${set.opponentId}`}>{set.opponent}</Link></td>
+                        <td><Link to={`/players/${props.game}/${set.opponentId}`}>{set.opponent}</Link></td>
                         <td>
                             {(set.isWin) ?
                             <div>{set.winnerScore}-{set.loserScore}</div> :
                             <div>{set.loserScore}-{set.winnerScore}</div>
                             }
                         </td>
-                        <td><Link to={`/tournaments/${set.tournamentId}`}>{set.tournament}</Link></td>
+                        <td><Link to={`/tournaments/${props.game}/${set.tournamentId}`}>{set.tournament}</Link></td>
                         <td>{formatDate(set.date)}</td>
                     </tr>
                     ))
