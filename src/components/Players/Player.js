@@ -3,6 +3,7 @@ import axios from 'axios';
 import PlayerInfo from './PlayerInfo';
 import PlayerStats from './PlayerStats';
 import PlayerTrueskillChart from './PlayerTrueskillChart';
+import PlayerSetsPieGraph from './PlayerSetsPieGraph';
 import PlayerTournamentsReactTable from './PlayerTournamentsReactTable';
 import PlayerSetsReactTable from './PlayerSetsReactTable';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -19,6 +20,8 @@ class Player extends Component {
         this.renderPlayerStats = this.renderPlayerStats.bind(this);
         this.renderPlayerTournaments = this.renderPlayerTournaments.bind(this);
         this.renderPlayerSets = this.renderPlayerSets.bind(this);
+        this.renderTrueskillHistory = this.renderTrueskillHistory.bind(this);
+        this.renderPlayerSetsPieGraph = this.renderPlayerSetsPieGraph.bind(this);
         // this.getPlayerStats = this.getPlayerStats.bind(this);
     }
 
@@ -160,7 +163,7 @@ class Player extends Component {
 
     renderPlayerStats() {
         return (
-            <div className="col-lg-8">
+            <div className="col-lg-12 d-block d-sm-none">
                 <PlayerStats game={this.props.match.params.game} player={this.state.playerStats} tournamentsAttended={this.state.tournamentsAttended}/>
             </div>
         )
@@ -168,7 +171,7 @@ class Player extends Component {
 
     renderPlayerInfo() {
         return (
-            <div className="col-lg-4">
+            <div className="col-lg-12">
                 <PlayerInfo game={this.props.match.params.game} player={this.state.player} />
             </div>
         )
@@ -176,7 +179,7 @@ class Player extends Component {
 
     renderPlayerTournaments() {
         return (
-            <div className="col-lg-4">
+            <div className="col-lg-12">
                 {/* <PlayerTournamentsTable game={this.props.match.params.game} tournaments={this.state.tournaments} /> */}
                 <PlayerTournamentsReactTable game={this.props.match.params.game} tournaments={this.state.tournaments} />
             </div>
@@ -185,9 +188,25 @@ class Player extends Component {
 
     renderPlayerSets() {
         return (
-            <div className="col-lg-8">
+            <div className="col-lg-12">
                 {/* <PlayerSetsTable game={this.props.match.params.game} sets={this.state.sets} /> */}
                 <PlayerSetsReactTable game={this.props.match.params.game} sets={this.state.sets} />
+            </div>
+        )
+    }
+
+    renderTrueskillHistory() {
+        return (
+            <div className="col-lg-12">
+                <PlayerTrueskillChart trueskillHistory={this.state.trueskillHistory}/>
+            </div>
+        )
+    }
+
+    renderPlayerSetsPieGraph() {
+        return (
+            <div className="col-lg-12">
+                <PlayerSetsPieGraph player={this.state.playerStats} />
             </div>
         )
     }
@@ -197,18 +216,30 @@ class Player extends Component {
             <div>
                 <div>
                     <div className="row">
-                        {this.renderPlayerInfo()}
-                    {/* </div>
-                    <div className="row"> */}
+                        <div className="col-lg-12">
+                            {this.renderPlayerInfo()}
+                            {this.renderPlayerStats()}
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-8 d-none d-md-block">
+                            {this.renderTrueskillHistory()}
+                        </div>
+                        <div className="col-lg-4 d-none d-md-block">
+                            {this.renderPlayerSetsPieGraph()}
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-4">
+                            {this.renderPlayerTournaments()}
+                        </div>
+                        <div className="col-lg-8">
+                            {this.renderPlayerSets()}
+                        </div>
+                    </div>
+                    {/* <div className="row">
                         {this.renderPlayerStats()}
-                    </div>
-                    <div className="row">
-                        <PlayerTrueskillChart trueskillHistory={this.state.trueskillHistory}/>
-                    </div>
-                    <div className="row">
-                        {this.renderPlayerTournaments()}
-                        {this.renderPlayerSets()}
-                    </div>
+                    </div> */}
                 </div>
             </div>
         )

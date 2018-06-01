@@ -148,7 +148,7 @@ class Head2Head extends Component {
             </form>
             <div>
                 <Head2HeadStats stats={this.state.stats}/>
-                <Head2HeadSetsTable sets={this.state.sets}/>
+                <Head2HeadSetsTable sets={this.state.sets} game={this.props.match.params.game}/>
             </div>
         </div>
 

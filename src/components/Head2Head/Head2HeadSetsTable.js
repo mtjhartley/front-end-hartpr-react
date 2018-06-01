@@ -28,12 +28,12 @@ const Head2HeadSetsTable = (props) => (
             <tbody>
                 {props.sets.map((set, i) => (
                     <tr key={i}>
-                        <td><Link to={`/tournaments/${set.tournamentId}`}>{set.tournament}</Link></td>
-                        <td><Link to={`/players/${set.winnerId}`}>{set.winner}</Link></td>
+                        <td><Link to={`/tournaments/${props.game}/${set.tournamentId}`}>{set.tournament}</Link></td>
+                        <td><Link to={`/players/${props.game}/${set.winnerId}`}>{set.winner}</Link></td>
                         <td>
                             <div>{set.winnerScore}-{set.loserScore}</div>
                         </td>
-                        <td><Link to={`/players/${set.loserId}`}>{set.loser}</Link></td>
+                        <td><Link to={`/players/${props.game}/{set.loserId}`}>{set.loser}</Link></td>
                         <td>{formatDate(set.date)}</td>
                     </tr>
                     ))

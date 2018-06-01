@@ -3,21 +3,31 @@ import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Skeleton from 'react-loading-skeleton'
 import {Pie} from 'react-chartjs-2';
 
-const Data = (props) => {
-    console.log(props.player)
-    // var labels = ["Jan", "Feb", "March"]
-    // var data = [1,2,3]
+const SetData = (props) => {
     var setsLost = props.player.setsPlayed - props.player.setsWon
-
     var labels = ["Sets Won", "Sets Lost"]
     var data = [props.player.setsWon, setsLost]
-
-    //var labels = props.trueskill.map((trueskill) => trueskill.tournamentName)
     return(
         {
             labels:labels,
             datasets: [{
                 label: "Set history",
+                data: data,
+                backgroundColor: ["green", "red"],
+            }]
+        }
+        )
+    }
+
+const GameData = (props) => {
+    var gamesLost = props.player.gamesPlayed - props.player.gamesWon
+    var labels = ["Games Won", "Games Lost"]
+    var data = [props.player.gamesWon, gamesLost]
+    return(
+        {
+            labels:labels,
+            datasets: [{
+                label: "Game history",
                 data: data,
                 backgroundColor: ["green", "red"],
             }]
@@ -77,7 +87,16 @@ const PlayerStats = (props) => (
             </tbody>
         </table>
 
-        <Pie data={Data(props)}/>
+        {/* <div className="row">
+        <div classname="col-lg-5">
+        <Pie data={SetData(props)}/>
+        </div>
+        <div classname="col-lg-5">
+        
+
+        <Pie data={GameData(props)}/>
+        </div>
+        </div> */}
     </div>
 
 )
