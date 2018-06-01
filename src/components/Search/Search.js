@@ -67,11 +67,12 @@ class Search extends Component {
                 
                 {(this.state.didSearchReturnResults || this.state.firstSearch) ? 
                 <div>
+                <h1>{(!this.state.firstSearch) ? <div>{this.state.results.length} player(s) found!</div> : null}</h1> 
                 {/* <SearchResults results={this.state.results} /> */}
                 <SearchResultsReactTable results={this.state.results} /> 
                 </div> :
                 <div>
-                <h1>No rows found!</h1>
+                <h1>No players found!</h1>
                 <SearchResultsReactTable results={this.state.results} /> 
                 </div>
                 }

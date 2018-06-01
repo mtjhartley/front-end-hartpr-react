@@ -9,8 +9,8 @@ const TournamentStats = (props) => (
         <div className="col-sm-12">
             <h1>{props.tournament.name || <Skeleton />}</h1>
             <h2>{formatDate(props.tournament.date) || <Skeleton />}</h2>
-            <h3>{(props.entrants) ? <div>Entrants: {props.entrants}</div> : null || <Skeleton />}</h3>
-            <h3>{(props.tournament.url) ? <a href={`https://smash.gg/tournament/${props.tournament.url}/events/melee-singles/overview`} target="_blank">smash.gg link</a> : null || <Skeleton />}</h3>
+            <h3>{(props.entrants) ? <div>Entrants: {props.entrants}</div> : <Skeleton />}</h3>
+            <h3>{(props.tournament.url) ? <a href={`https://smash.gg/tournament/${props.tournament.url}/events/melee-singles/overview`} target="_blank">smash.gg link</a> : <Skeleton />}</h3>
         </div>
     </div>
 )

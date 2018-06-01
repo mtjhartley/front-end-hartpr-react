@@ -1,9 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 // The Header creates links that can be used to navigate
 // between routes.
+
+const activeStyle = () => {
+  return {backgroundColor: "#227245"}
+}
 const Header = () => (
   <header>
     {/* <nav>
@@ -25,13 +29,13 @@ const Header = () => (
 
           <div className="collapse navbar-collapse" id="navbarsExample07">
             <ul className="navbar-nav mr-auto">
-            <li><Link to='/players/react/melee' className="nav-link">Players React Table</Link></li>
-            <li><Link to='/players' className="nav-link">Players Table</Link></li>
-            <li><Link to='/tournaments/react/melee' className="nav-link">Tournaments React Table</Link></li>
-            <li><Link to='/tournaments' className="nav-link">Tournaments Table</Link></li>
-            <li><Link to='/head2head/melee' className="nav-link">Head2Head</Link></li>
-            <li><Link to='/search' className="nav-link">Search</Link></li>
-            <li><Link to='/about' className="nav-link">About</Link></li>
+            <li><NavLink to='/players/react/melee' className="nav-link">Players React Table</NavLink></li>
+            <li><NavLink to='/players' className="nav-link">Players Table</NavLink></li>
+            <li><NavLink to='/tournaments/react/melee' activeStyle={activeStyle()}className="nav-link">Tournaments React Table</NavLink></li>
+            <li><NavLink to='/tournaments' className="nav-link">Tournaments Table</NavLink></li>
+            <li><NavLink to='/head2head/melee' className="nav-link">Head2Head</NavLink></li>
+            <li><NavLink to='/search' className="nav-link">Search</NavLink></li>
+            <li><NavLink to='/about' className="nav-link">About</NavLink></li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
               <div className="dropdown-menu" aria-labelledby="dropdown07">

@@ -113,6 +113,7 @@ class Head2Head extends Component {
         return (
         <div>
             <form onSubmit={this.submit} className="form-group">
+            <h1>See the Head2Head matchup for any two players!</h1>
                 <div className="row">
                     <div className="col-sm-6">
                         <label htmlFor="player1">Player 1</label>
@@ -143,7 +144,7 @@ class Head2Head extends Component {
                     </div>
                 </div>
                 <br />
-                <button className="btn btn-primary mb-2 btn-lg btn-block">Let's Ride!</button>
+                <button className="btn btn-primary mb-2 btn-lg btn-block" disabled={!this.state.players.length === 0}>Let's Ride!</button>
             </form>
             <div>
                 <Head2HeadStats stats={this.state.stats}/>

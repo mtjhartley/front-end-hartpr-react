@@ -1,29 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import PlayerInfo from './PlayerInfo';
+import PlayerStats from './PlayerStats';
+import PlayerTrueskillChart from './PlayerTrueskillChart';
 import PlayerTournamentsReactTable from './PlayerTournamentsReactTable';
 import PlayerSetsReactTable from './PlayerSetsReactTable';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Whoops404 from '../ui/Whoops404';
-import { formatDate } from '../utils/utils'
 
 class Player extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            player: {},
-            sets: [],
-            tournaments: [],
-            tournamentsAttended: 0,
-            setsPlayed: 0,
-            setsWon: 0,
-            setWinPercentage: 0,
-            gamesPlayed: 0,
-            gamesWon: 0,
-            playerLoaded: false,
-            setsLoaded: false,
-            tournamentsLoaded: false,
-            initialLoading: true,
-        }
+        this.state = this.getInitialState();
+        this.getInitialState = this.getInitialState.bind(this);
         this.getPlayerInfo = this.getPlayerInfo.bind(this);
         this.loadDummyPlayer = this.loadDummyPlayer.bind(this);
         this.loadDummyTournaments = this.loadDummyTournaments.bind(this);
@@ -32,7 +20,22 @@ class Player extends Component {
         this.renderPlayerTournaments = this.renderPlayerTournaments.bind(this);
         this.renderPlayerSets = this.renderPlayerSets.bind(this);
         // this.getPlayerStats = this.getPlayerStats.bind(this);
-        this.renderDummyInfo = this.renderDummyInfo.bind(this);
+    }
+
+    getInitialState() {
+        return {
+            player: {},
+            sets: [],
+            tournaments: [],
+            playerStats: {},
+            trueskillHistory: [],
+            tournamentsAttended: null,
+            setsPlayed: null,
+            setsWon: null,
+            setWinPercentage: null,
+            gamesPlayed: null,
+            gamesWon: null,
+        }
     }
 
     loadDummyPlayer() {
@@ -70,12 +73,12 @@ class Player extends Component {
         const playerUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/${playerId}`
         const setsUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/${playerId}/sets`
         const tournamentsUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/${playerId}/tournaments`
+        const trueskillHistoryUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/${playerId}/trueskillhistory`
 
         axios.get(playerUrl)
         .then((response) => {
             this.setState({
                 player: response.data,
-                playerLoaded: true
             })
             // console.log(playerUrl)
             // console.log(this.state.player)
@@ -102,13 +105,20 @@ class Player extends Component {
             
             this.setState({
                 sets: sets,
+                playerStats: {
+                    setsPlayed: setsPlayed,
+                    setsWon: setsWon,
+                    setWinPercentage: setWinPercentage,
+                    gamesPlayed: gamesPlayed,
+                    gamesWon: gamesWon,
+                    gameWinPercentage: gameWinPercentage,
+                },
                 setsPlayed: setsPlayed,
                 setsWon: setsWon,
                 setWinPercentage: setWinPercentage,
                 gamesPlayed: gamesPlayed,
                 gamesWon: gamesWon,
                 gameWinPercentage: gameWinPercentage,
-                setsLoaded: true
             })
             // console.log(setsUrl)
             // console.log(this.state.sets)
@@ -122,7 +132,6 @@ class Player extends Component {
             this.setState({
                 tournaments: response.data,
                 tournamentsAttended: response.data.length,
-                tournamentsLoaded: true
             })
             // console.log(tournamentsUrl)
             // console.log(this.state.tournaments)
@@ -130,6 +139,13 @@ class Player extends Component {
         .catch((error) => {
             console.log(error)
         })        
+
+        axios.get(trueskillHistoryUrl)
+        .then((response) => {
+            this.setState({
+                trueskillHistory: response.data
+            })
+        })
     }
 
     componentDidMount() {
@@ -138,46 +154,25 @@ class Player extends Component {
 
     componentWillReceiveProps(nextProps) {
         var id = nextProps.match.params.id;
+        this.setState(this.getInitialState())
         this.getPlayerInfo(id);
     }
 
     renderPlayerStats() {
         return (
-            <div className="col-md-8">
-                <h5>Tournaments attended : {this.state.tournamentsAttended}</h5>
-                <h5>Sets Played : {this.state.setsPlayed}</h5>
-                <h5>Sets Won : {this.state.setsWon}</h5>
-                <h5>Sets Win Percentage : {this.state.setWinPercentage}</h5>
-                <h5>Games Played : {this.state.gamesPlayed}</h5>
-                <h5>Games Won : {this.state.gamesWon}</h5>
-                <h5>Games Win Percentage : {this.state.gameWinPercentage}</h5>
+            <div className="col-lg-8">
+                <PlayerStats game={this.props.match.params.game} player={this.state.playerStats} tournamentsAttended={this.state.tournamentsAttended}/>
             </div>
         )
     }
 
     renderPlayerInfo() {
         return (
-            <div className="col-md-4">
-                <h1 className="text-left">{this.state.player.tag}</h1>
-                <h4 className="text-left">{this.state.player.name}</h4>
-                <h5 className="text-left">Region: {this.state.player.state}</h5>
-                <h2 className="text-left">Trueskill: {this.state.player.trueskill}</h2>
-                <h6 className="text-left">Last Active: {formatDate(this.state.player.lastActive)}</h6>
+            <div className="col-lg-4">
+                <PlayerInfo game={this.props.match.params.game} player={this.state.player} />
             </div>
         )
     }   
-
-    renderDummyInfo() {
-        return (
-            <div className="col-md-4">
-                <h1 className="text-left">Tag</h1>
-                <h4 className="text-left">Name</h4>
-                <h5 className="text-left">Region</h5>
-                <h2 className="text-left">Trueskill</h2>
-                <h6 className="text-left">Last Active</h6>
-            </div>
-        ) 
-    }
 
     renderPlayerTournaments() {
         return (
@@ -200,29 +195,21 @@ class Player extends Component {
     render() {
         return(
             <div>
-            {(this.state.playerLoaded && this.state.setsLoaded && this.state.tournamentsLoaded || !this.state.initialLoading) ? 
                 <div>
                     <div className="row">
                         {this.renderPlayerInfo()}
+                    {/* </div>
+                    <div className="row"> */}
                         {this.renderPlayerStats()}
                     </div>
-                    <div className='row'>
+                    <div className="row">
+                        <PlayerTrueskillChart trueskillHistory={this.state.trueskillHistory}/>
+                    </div>
+                    <div className="row">
                         {this.renderPlayerTournaments()}
                         {this.renderPlayerSets()}
                     </div>
-                </div> : 
-                <div>
-                    <Whoops404 entity={"player"} />
-                        <div className="row">
-                            {this.renderDummyInfo()}
-                            {this.renderPlayerStats()}
-                        </div>
-                        <div className='row'>
-                            {this.renderPlayerTournaments()}
-                            {this.renderPlayerSets()}
-                        </div>
                 </div>
-            }
             </div>
         )
     }

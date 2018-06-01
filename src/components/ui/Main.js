@@ -19,7 +19,7 @@ const Main = () => (
             <Route path='/head2head/:game' component={Head2Head}/>
             <Route path='/search' component={Search}/>
             <Route exact path='/about' component={About}/>
-            <Redirect from="/" to="players" />
+            <Redirect from="/" to="/players" />
             <Redirect from="/players/react" to="/players/react/melee" />
         </Switch>
     </main>

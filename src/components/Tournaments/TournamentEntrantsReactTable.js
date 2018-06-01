@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import {entrantSizeOptions} from '../utils/utils';
+import Skeleton from 'react-loading-skeleton'
 
 class TournamentEntrantsReactTable extends Component {
     constructor(props) {

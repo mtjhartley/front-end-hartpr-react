@@ -4,7 +4,6 @@ import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import TournamentEntrantsReactTable from './TournamentEntrantsReactTable';
 import TournamentSetsReactTable from './TournamentSetsReactTable';
 import TournamentStats from './TournamentStats';
-import Skeleton from 'react-loading-skeleton'
 // const Tournament = (props) => {
 //     console.log(props);
 //     console.log(props.match.params.id);
@@ -18,10 +17,15 @@ import Skeleton from 'react-loading-skeleton'
 class Tournament extends Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.state = this.getInitialState();
+        this.getInitialState = this.getInitialState.bind(this);
+    }
+
+    getInitialState() {
+        return {
             tournament: {},
             sets: [],
-            players: [], //TODO: Remove one of these, probably players!
+            players: [],
             entrants: [],
         }
     }

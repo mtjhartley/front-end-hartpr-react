@@ -10,10 +10,12 @@ class AutoComplete extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="col-lg-6 offset-lg-3">
                 <input type="text"
                         ref="player"
-                        list="players" />
+                        list="players"
+                        placeholder="Search for a player..."
+                        className="form-control form-control-lg" />
                 {/* <datalist id="players">
                     {this.props.players.map(
                         (player, i) =>
@@ -37,11 +39,15 @@ export const SearchForm = ( {player, players, searchPlayers} ) => {
     }
 
     return (
-        <form onSubmit={submit}>
-            <label htmlFor="player_search">Search Player</label>
-            <AutoComplete players={players}
-                            ref={input => _player = input} />
-            <button>Search Player!</button>
+
+        <form onSubmit={submit} className="form-group">
+            <h1>Search for your favorite player!</h1>
+            <div className="row">
+                <AutoComplete players={players}
+                               ref={input => _player = input} />
+            </div>                   
+            <br />         
+            <button className="btn btn-primary mb-2 btn-lg btn-block">Go!!!</button>
         </form>
 
     )

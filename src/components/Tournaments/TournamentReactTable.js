@@ -98,7 +98,7 @@ class TournamentReactTable extends Component {
                         //     sortable: false
                         // },
                         {
-                            Header:"Players",
+                            Header:"Entrants",
                             accessor: "attendees",
                             minWidth: 30
                         },

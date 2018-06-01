@@ -91,7 +91,7 @@ class PlayerReactTable extends Component {
             <div>
                 {(this.state.didQueryReturnResults || this.state.firstLoad) ? 
                 <div>
-                <h1>WA Players!</h1>
+                <h1>Washington {this.props.match.params.game} Players!</h1>
                 <ReactTable
                     data={players}
                     
