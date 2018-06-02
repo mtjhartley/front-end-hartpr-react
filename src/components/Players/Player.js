@@ -73,10 +73,10 @@ class Player extends Component {
     }
 
     getPlayerInfo(playerId) {
-        const playerUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/${playerId}`
-        const setsUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/${playerId}/sets`
-        const tournamentsUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/${playerId}/tournaments`
-        const trueskillHistoryUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/${playerId}/trueskillhistory`
+        const playerUrl = `http://hartpr20180601085617.azurewebsites.net/api/players/${this.props.match.params.game}/${playerId}`
+        const setsUrl = `http://hartpr20180601085617.azurewebsites.net/api/players/${this.props.match.params.game}/${playerId}/sets`
+        const tournamentsUrl = `http://hartpr20180601085617.azurewebsites.net/api/players/${this.props.match.params.game}/${playerId}/tournaments`
+        const trueskillHistoryUrl = `http://hartpr20180601085617.azurewebsites.net/api/players/${this.props.match.params.game}/${playerId}/trueskillhistory`
 
         axios.get(playerUrl)
         .then((response) => {

@@ -22,7 +22,7 @@ class Head2Head extends Component {
     }
 
     componentDidMount() {
-        const url = `http://localhost:61775/api/players/${this.props.match.params.game}/?OrderBy=tag&pageNumber=1&pageSize=1500`
+        const url = `http://hartpr20180601085617.azurewebsites.net/api/players/${this.props.match.params.game}/?OrderBy=tag&pageNumber=1&pageSize=1500`
         axios.get(url)
             .then((response) => {
                 this.setState({
@@ -70,7 +70,7 @@ class Head2Head extends Component {
         //TODO: Where do I do something if the result is null aka they've never played, what component do I render and how?
         var player1Id = this.state.player1Id;
         var player2Id = this.state.player2Id;
-        const h2hUrl = `http://localhost:61775/api/players/${this.props.match.params.game}/head2head/${player1Id}/${player2Id}`
+        const h2hUrl = `http://hartpr20180601085617.azurewebsites.net/api/players/${this.props.match.params.game}/head2head/${player1Id}/${player2Id}`
 
         axios.get(h2hUrl)
             .then((response) => {

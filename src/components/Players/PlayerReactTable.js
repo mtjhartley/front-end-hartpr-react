@@ -61,7 +61,7 @@ class PlayerReactTable extends Component {
     }
 
     componentDidMount() {
-        const url = `http://localhost:61775/api/players/${this.props.match.params.game}?State=WA&OrderBy=trueSkill%20desc&pageNumber=1&pageSize=50`
+        const url = `http://hartpr20180601085617.azurewebsites.net/api/players/${this.props.match.params.game}?State=WA&OrderBy=trueSkill%20desc&pageNumber=1&pageSize=50`
         console.log(this.props.match.params.game);
         console.log("this.props.match.params.game");
         axios.get(url)

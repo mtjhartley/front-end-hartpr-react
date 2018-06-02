@@ -46,7 +46,7 @@ class Search extends Component {
     }
 
     componentDidMount() {
-        const url = `http://localhost:61775/api/players/melee/?OrderBy=tag&pageNumber=1&pageSize=1500`
+        const url = `http://hartpr20180601085617.azurewebsites.net/api/players/melee/?OrderBy=tag&pageNumber=1&pageSize=1500`
         axios.get(url)
         .then((response) => {
             this.setState({

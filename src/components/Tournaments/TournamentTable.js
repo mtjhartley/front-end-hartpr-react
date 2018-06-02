@@ -48,7 +48,7 @@ class TournamentTable extends Component {
     }
 
     componentDidMount() {
-        const url = `http://localhost:61775/api/tournaments/melee?orderBy=Date%20desc&pageNumber=1&pageSize=25`;
+        const url = `http://hartpr20180601085617.azurewebsites.net/api/tournaments/melee?orderBy=Date%20desc&pageNumber=1&pageSize=25`;
 
         axios.get(url)
             .then((response) => {

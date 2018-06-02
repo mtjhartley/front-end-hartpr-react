@@ -56,7 +56,7 @@ class TournamentReactTable extends Component {
     }
 
     componentDidMount() {
-        const url = `http://localhost:61775/api/tournaments/${this.props.match.params.game}?OrderBy=Date%20desc&pageNumber=1&pageSize=1000`
+        const url = `http://hartpr20180601085617.azurewebsites.net/api/tournaments/${this.props.match.params.game}?OrderBy=Date%20desc&pageNumber=1&pageSize=1000`
 
         axios.get(url)
             .then((response) => {

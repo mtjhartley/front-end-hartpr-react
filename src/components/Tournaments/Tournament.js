@@ -31,7 +31,7 @@ class Tournament extends Component {
     }
 
     componentDidMount() {
-        const url =`http://localhost:61775/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}`
+        const url =`http://hartpr20180601085617.azurewebsites.net/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}`
         
         axios.get(url)
             .then((response) => {
@@ -45,7 +45,7 @@ class Tournament extends Component {
                 console.log(error)
             })
 
-        const setsUrl =`http://localhost:61775/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}/sets`
+        const setsUrl =`http://hartpr20180601085617.azurewebsites.net/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}/sets`
         axios.get(setsUrl)
             .then((response) => {
                 this.setState({
@@ -58,7 +58,7 @@ class Tournament extends Component {
                 console.log(error)
             })
 
-        const playersUrl =`http://localhost:61775/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}/players`
+        const playersUrl =`http://hartpr20180601085617.azurewebsites.net/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}/players`
         axios.get(playersUrl)
             .then((response) => {
                 this.setState({
@@ -71,7 +71,7 @@ class Tournament extends Component {
                 console.log(error)
             })
 
-        const entrantsUrl =`http://localhost:61775/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}/entrants`
+        const entrantsUrl =`http://hartpr20180601085617.azurewebsites.net/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}/entrants`
         axios.get(entrantsUrl)
             .then((response) => {
                 this.setState({
