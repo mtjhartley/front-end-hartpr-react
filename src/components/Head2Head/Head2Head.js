@@ -32,6 +32,7 @@ class Head2Head extends Component {
     }
 
     componentDidMount() {
+        //TODO: Comment this out or set to empty array to be able to see props and state for each component like the screenshot
         this.setState({
             players: this.props.response.data.value
         })
