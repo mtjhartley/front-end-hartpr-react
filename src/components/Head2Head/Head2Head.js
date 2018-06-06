@@ -6,14 +6,14 @@ import Head2HeadStats from './Head2HeadStats';
 
 class Head2Head extends Component {
     constructor(props) {
+        console.log("logging props");
+        console.log(props);
+        console.log(props.response);
+        //console.log(props.res.data.value);
         super(props);
-        this.state = {
-            players: [],
-            player1Id: null,
-            player2Id: null,
-            sets: [],
-            stats: {}
-        }
+        this.state = this.setInitialState();
+
+        this.setInitialState = this.setInitialState.bind(this);
         this.submit = this.submit.bind(this);
         this.handleChange1 = this.handleChange1.bind(this);
         this.handleChange2 = this.handleChange2.bind(this);
@@ -21,17 +21,20 @@ class Head2Head extends Component {
         this.calculateStatsForHead2Head = this.calculateStatsForHead2Head.bind(this);
     }
 
+    setInitialState() {
+        return {
+            players: [],
+            player1Id: null,
+            player2Id: null,
+            sets: [],
+            stats: {},
+        }
+    }
+
     componentDidMount() {
-        const url = `players/${this.props.match.params.game}/?OrderBy=tag&pageNumber=1&pageSize=1500`
-        makeApiRequest(url)
-            .then((response) => {
-                this.setState({
-                    players: response.data.value
-                })
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        this.setState({
+            players: this.props.response.data.value
+        })
     }
 
     calculateStatsForHead2Head(player1Id, player2Id, sets) {
@@ -70,7 +73,7 @@ class Head2Head extends Component {
         //TODO: Where do I do something if the result is null aka they've never played, what component do I render and how?
         var player1Id = this.state.player1Id;
         var player2Id = this.state.player2Id;
-        const h2hUrl = `players/${this.props.match.params.game}/head2head/${player1Id}/${player2Id}`
+        const h2hUrl = `players/${this.props.game}/head2head/${player1Id}/${player2Id}`
 
         makeApiRequest(h2hUrl)
             .then((response) => {
@@ -122,10 +125,10 @@ class Head2Head extends Component {
                             value={this.state.player1Id}
                             onChange={this.handleChange1}
                             >
-                            {this.state.players.map((player, i) => (
+                            {/* {this.state.players.value.map((player, i) => (
                                 <option key={i} value={player.id}>{player.tag}</option>
                                 ))
-                            }
+                            } */}
                         </select>
                     </div>
                     <div className="col-sm-6">
@@ -135,10 +138,10 @@ class Head2Head extends Component {
                             value={this.state.player2Id}
                             onChange={this.handleChange2}
                             >
-                            {this.state.players.map((player, i) => (
+                            {/* {this.state.players.value.map((player, i) => (
                                 <option key={i} value={player.id}>{player.tag}</option>
                                 ))
-                            }
+                            } */}
                         </select>
                     </div>
                 </div>
@@ -147,7 +150,7 @@ class Head2Head extends Component {
             </form>
             <div>
                 <Head2HeadStats stats={this.state.stats}/>
-                <Head2HeadSetsTable sets={this.state.sets} game={this.props.match.params.game}/>
+                <Head2HeadSetsTable sets={this.state.sets} game={this.props.game}/>
             </div>
         </div>
 

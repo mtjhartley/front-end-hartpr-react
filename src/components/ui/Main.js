@@ -30,8 +30,6 @@ function withLoadedData(Component, url, SkeletonComponent) {
                     throw err;
                 })
         }
-
-        //render the component
         render() {
             const loading = this.state.loading;
             const err = this.state.err;
@@ -44,9 +42,8 @@ function withLoadedData(Component, url, SkeletonComponent) {
             if (err) {
                 return (<div> 404 </div>)
             }
+            return (<Component response={this.state.res} game={this.props.match.params.game}/>)
 
-            // return (<Component />)
-            return (<div> Testing withLoadedData </div>)
         }
     }
 }
