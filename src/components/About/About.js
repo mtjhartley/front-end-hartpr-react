@@ -3,13 +3,9 @@ import React from 'react';
 const About = () => (
     <div className="about">
          <h1 className= "text-left">About</h1>
-         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis erat non dignissim malesuada.
-             Mauris in elit quis lectus auctor pharetra. Cras fermentum leo est, a aliquet ligula cursus a. Ut vitae leo
-             mollis, scelerisque enim nec, euismod turpis. Praesent ut turpis non justo lacinia varius sed eu mauris.
-             Nullam hendrerit aliquet sapien varius faucibus. Nulla varius magna ex, nec ornare massa interdum sed.
-             Aliquam consequat lacus nec felis scelerisque, tempus maximus sapien venenatis. Sed quis ornare purus.
-             Vestibulum tempor id diam vel ultrices. Aenean neque nibh, tempor in tincidunt nec, ullamcorper in erat.
-             Aliquam erat volutpat. Aenean vitae sapien at nibh lacinia accumsan maximus sit amet risus.
+         <p>The HartPR is a competitive ranking system and tournament archive for the game Super Smash Bros. Melee, created by Michael Hartley and Mitch Dzugan. 
+            The goal of our site is to provide an objective indicator of a player's current rank in the Washington Melee community as well as their comprehensive 
+            in-state tournament history.
          </p>
         <p>Vestibulum laoreet condimentum sem quis convallis. Nullam quis tortor mauris. Pellentesque orci sapien,
             fermentum non porta a, lobortis vitae mi. Integer quis enim at nunc commodo egestas. Maecenas et tortor ut

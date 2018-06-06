@@ -6,6 +6,10 @@ export const formatDate = (inputDate) => {
     }
 }
 
+export const uppercaseString = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 const entrantOptionsArray = [5,8,16,24,48,100]
 const setOptionsArray =[5,8,16,24,48,100]
 

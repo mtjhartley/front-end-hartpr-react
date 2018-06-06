@@ -1,18 +1,9 @@
 import React, { Component } from 'react'
-import axios from 'axios';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import TournamentEntrantsReactTable from './TournamentEntrantsReactTable';
 import TournamentSetsReactTable from './TournamentSetsReactTable';
 import TournamentStats from './TournamentStats';
-// const Tournament = (props) => {
-//     console.log(props);
-//     console.log(props.match.params.id);
-//     return (
-//         <div>
-//             <h1>This is a tournaments page</h1>
-//         </div>
-//     )
-// }
+import {makeApiRequest} from "../utils/api";
 
 class Tournament extends Component {
     constructor(props) {
@@ -31,54 +22,43 @@ class Tournament extends Component {
     }
 
     componentDidMount() {
-        const url =`http://hartpr20180601085617.azurewebsites.net/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}`
-        
-        axios.get(url)
+        //const url =`http://hartpr20180601085617.azurewebsites.net/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}`
+        makeApiRequest(`tournaments/${this.props.match.params.game}/${this.props.match.params.id}`)
             .then((response) => {
                 this.setState({
                     tournament: response.data
                 })
-                console.log(url)
-                console.log(this.state.tournament)
             })
             .catch((error) => {
                 console.log(error)
             })
 
-        const setsUrl =`http://hartpr20180601085617.azurewebsites.net/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}/sets`
-        axios.get(setsUrl)
+        makeApiRequest(`tournaments/${this.props.match.params.game}/${this.props.match.params.id}/sets`)
             .then((response) => {
                 this.setState({
                     sets: response.data
                 })
-                console.log(setsUrl)
-                console.log(this.state.sets)
             })
             .catch((error) => {
                 console.log(error)
             })
 
-        const playersUrl =`http://hartpr20180601085617.azurewebsites.net/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}/players`
-        axios.get(playersUrl)
-            .then((response) => {
-                this.setState({
-                    players: response.data
-                })
-                console.log(playersUrl)
-                console.log(this.state.players)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        //TODO: Evaluate which is more relevant players (with no info besides name and id), or entrants (with seed and placing)
+        // makeApiRequest(`tournaments/${this.props.match.params.game}/${this.props.match.params.id}/players`)
+        //     .then((response) => {
+        //         this.setState({
+        //             players: response.data
+        //         })
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+        //     })
 
-        const entrantsUrl =`http://hartpr20180601085617.azurewebsites.net/api/tournaments/${this.props.match.params.game}/${this.props.match.params.id}/entrants`
-        axios.get(entrantsUrl)
+        makeApiRequest(`tournaments/${this.props.match.params.game}/${this.props.match.params.id}/entrants`)
             .then((response) => {
                 this.setState({
                     entrants: response.data
                 })
-                console.log(entrantsUrl)
-                console.log(this.state.entrants)
             })
             .catch((error) => {
                 console.log(error)

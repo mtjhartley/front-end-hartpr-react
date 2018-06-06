@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { SearchForm } from './SearchForm';
 import SearchResultsReactTable from './SearchResultsReactTable';
+import {makeApiRequest} from '../utils/api';
 
 class Search extends Component {
     constructor(props) {
@@ -20,19 +20,19 @@ class Search extends Component {
 
     searchPlayerFromApi() {
         console.log("logging the URl, needs to be AFTer teh state updates!", this.state.url)
-        axios.get(this.state.url)
-        .then((response) => {
-            this.setState({
-                results: response.data.value,
-                firstSearch: false,
-                didSearchReturnResults: response.data.value.length === 0 ? false : true
+        makeApiRequest(this.state.url)
+            .then((response) => {
+                this.setState({
+                    results: response.data.value,
+                    firstSearch: false,
+                    didSearchReturnResults: response.data.value.length === 0 ? false : true
+                })
             })
-        })
-        .catch((error) => {
-            console.log("In searchPlayerFromApi url:", this.state.url)
-            console.log(error)
-            return []
-        })
+            .catch((error) => {
+                console.log("In searchPlayerFromApi url:", this.state.url)
+                console.log(error)
+                return []
+            })
 
     }
 
@@ -46,17 +46,16 @@ class Search extends Component {
     }
 
     componentDidMount() {
-        const url = `http://hartpr20180601085617.azurewebsites.net/api/players/melee/?OrderBy=tag&pageNumber=1&pageSize=1500`
-        axios.get(url)
-        .then((response) => {
-            this.setState({
-                players: response.data.value
+        const url = `players/melee/?OrderBy=tag&pageNumber=1&pageSize=1500`
+        makeApiRequest(url)
+            .then((response) => {
+                this.setState({
+                    players: response.data.value
+                })
             })
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     render() {

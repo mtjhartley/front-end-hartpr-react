@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Skeleton from 'react-loading-skeleton'
 import {Pie} from 'react-chartjs-2';
 
 const SetData = (props) => {

@@ -1,12 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Line, Bar, HorizontalBar} from 'react-chartjs-2';
-import Skeleton from 'react-loading-skeleton'
 
 const Data = (props) => {
-    console.log(props.trueskillHistory)
-    // var labels = ["Jan", "Feb", "March"]
-    // var data = [1,2,3]
-
     var labels = []
     var data = []
 
@@ -21,7 +16,6 @@ const Data = (props) => {
 
     labels = labels.slice(0).slice(-8)
     data = data.slice(0).slice(-8)
-    //var labels = props.trueskill.map((trueskill) => trueskill.tournamentName)
     return(
         {
             labels:labels,
@@ -39,31 +33,10 @@ const Data = (props) => {
 const PlayerTrueskillChart = (props) => (
     
     <div>
-        {/* <h2>Trueskill History</h2> */}
         {/* <Line data={Data(props)} /> */}
         {/* <Bar data={Data(props)} /> */}
         <HorizontalBar data={Data(props)} /> 
-        
     </div>
 )
-
-// class PlayerTrueskillChart extends Component {
-//     constructor(props){
-//         super(props);
-//     }
-
-//     createLabel() {
-
-//     }
-
-//     render() {
-//         return (
-//             <div className="col-lg-12">
-//                 <h1>Hello Chart</h1>
-//                 <Line data={Data(this.props)} />
-//             </div>
-//         )
-//     }
-// }
 
 export default PlayerTrueskillChart;

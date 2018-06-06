@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Head2HeadSetsTable from './Head2HeadSetsTable';
+import {makeApiRequest} from "../utils/api";
 import Head2HeadStats from './Head2HeadStats';
 
 class Head2Head extends Component {
@@ -22,8 +22,8 @@ class Head2Head extends Component {
     }
 
     componentDidMount() {
-        const url = `http://hartpr20180601085617.azurewebsites.net/api/players/${this.props.match.params.game}/?OrderBy=tag&pageNumber=1&pageSize=1500`
-        axios.get(url)
+        const url = `players/${this.props.match.params.game}/?OrderBy=tag&pageNumber=1&pageSize=1500`
+        makeApiRequest(url)
             .then((response) => {
                 this.setState({
                     players: response.data.value
@@ -70,9 +70,9 @@ class Head2Head extends Component {
         //TODO: Where do I do something if the result is null aka they've never played, what component do I render and how?
         var player1Id = this.state.player1Id;
         var player2Id = this.state.player2Id;
-        const h2hUrl = `http://hartpr20180601085617.azurewebsites.net/api/players/${this.props.match.params.game}/head2head/${player1Id}/${player2Id}`
+        const h2hUrl = `players/${this.props.match.params.game}/head2head/${player1Id}/${player2Id}`
 
-        axios.get(h2hUrl)
+        makeApiRequest(h2hUrl)
             .then((response) => {
                 this.setState({
                     sets: response.data,
@@ -82,7 +82,6 @@ class Head2Head extends Component {
             .catch((error) => {
                 console.log(error)
             })
-        console.log(h2hUrl)
     }
 
     submit(e) {

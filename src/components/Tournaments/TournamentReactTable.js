@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom'
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import {formatDate} from "../utils/utils";
+import {makeApiRequest} from "../utils/api";
 
 
 class TournamentReactTable extends Component {
@@ -56,9 +56,7 @@ class TournamentReactTable extends Component {
     }
 
     componentDidMount() {
-        const url = `http://hartpr20180601085617.azurewebsites.net/api/tournaments/${this.props.match.params.game}?OrderBy=Date%20desc&pageNumber=1&pageSize=1000`
-
-        axios.get(url)
+        makeApiRequest(`tournaments/${this.props.match.params.game}?OrderBy=Date%20desc&pageNumber=1&pageSize=1000`)
             .then((response) => {
                 this.setState({
                     tournaments: response.data.value

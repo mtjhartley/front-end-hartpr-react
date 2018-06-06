@@ -32,7 +32,7 @@ export const SearchForm = ( {player, players, searchPlayers} ) => {
     const submit = (e) => {
         e.preventDefault();
         console.log('player', _player.value);
-        var query =  `http://hartpr20180601085617.azurewebsites.net/api/players/melee/?searchQuery=${_player.value}&OrderBy=tag&pageNumber=1&pageSize=2000`;
+        var query =  `players/melee/?searchQuery=${_player.value}&OrderBy=tag&pageNumber=1&pageSize=2000`;
         searchPlayers(query);
         //_player.value=''
 
